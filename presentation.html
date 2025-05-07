@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Презентація</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f4fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #5b2c91;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    section {
+      background: white;
+      border-left: 6px solid #5b2c91;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    section h2 {
+      color: #5b2c91;
+      margin-top: 0;
+    }
+
+    section p {
+      margin: 10px 0;
+    }
+
+    .image-block {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .image-block img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="text-align:center; font-size: 2em; letter-spacing: 1px;">ЗВІТ</h1>
+    <p style="text-align:center; font-size: 1em;">виробничої практики студента <br>
+      І-го курсу ОР «Магістр» групи КНМ-1 <br>
+      факультету математики та інформатики <br>
+      спеціальності 122 «Комп’ютерні науки»  <br>
+    </p>
+    <p style="text-align:center; font-size: 1em;"></p>
+    <p style="text-align:center; font-weight: bold; font-size: 1.1em;"><b>Кисельова Андрія Віталійовича</b></p>
+
+  <section>
+    <h2>Місце проходження практики</h2>
+    <div class="image-block">
+      <img src="img/softserve-1.jpeg" alt="Зображення">
+    </div>
+    <p>
+      Компанія «Українські Інформаційні Технології» є розробницьким центром компанії SoftServe і однією з найбільших ІТ-компаній в Україні та Центрально-Східній Європі, що спеціалізується на розробці програмного забезпечення, ІТ-консалтингу та наданні цифрових рішень для бізнесу. 
+  </section>
+
+  <section>
+    <h2>Зміст практики</h2>
+    <p>У рамках проходження виробничої практики було поставлено завдання розробити веб-додаток для базового обліку фінансів.</p>
+    <p>Проект складається з двох частин: серверної (backend) та клієнтської (frontend). Для реалізації проєкту було використано:</p>
+    <ul>
+      <li> NestJS — фреймворк для побудови структурованого серверного застосунку; </li>
+      <li> PostgreSQL — система керування базами даних; </li>
+      <li> TypeORM — ORM для зручної взаємодії з реляційною базою даних; </li>
+      <li> JWT — для аутентифікації користувачів; </li>
+      <li> DTO та class-validator — для валідації вхідних даних.  </li>
+      <li> React — фреймворк для побудови клієнтського застосунку.  </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Проектування бази даних</h2>
+    <div class="image-block">
+      <img src="img/db.jpg" alt="Зображення">
+    </div>
+    <ul>
+    <li><strong>users</strong> — зберігає інформацію про користувачів (email, hash пароля, isAdmin)</li>
+    <li><strong>groups</strong> — групи для об’єднання рахунків</li>
+    <li><strong>accounts</strong> — рахунки з сумою, валютою, описом; прив’язані до userId та groupId</li>
+    <li><strong>categories</strong> — категорії витрат/доходів (наприклад: "Продукти", "Зарплата")</li>
+    <li><strong>transactions</strong> — фінансові операції з полями:
+      <ul>
+        <li>type: income / expense</li>
+        <li>accountId, categoryId</li>
+        <li>сума, нотатка</li>
+        <li>createdAt — дата створення</li>
+      </ul>
+    </li>
+  </ul>
+
+  <p>Всі таблиці мають відповідні зв’язки через зовнішні ключі. Реалізовано каскадне видалення (наприклад, при видаленні рахунку — видаляються пов’язані транзакції).</p>
+  </section>
+  <section>
+      <h2 style="color: #5b2c91;">Дизайн серверної частини</h2>
+    <p>Бекенд API реалізований на основі <strong>REST-архітектури</strong> з чіткою структурою маршрутів та відповідей.</p>
+
+    <ul>
+      <li>Кожна сутність має власний контролер і сервіс: <b>/users</b>, <b>/accounts</b>, <b>/groups</b>, <b>/transactions</b>, <b>/categories</b>.</li>
+      <li>Маршрути розділені за типом дії:
+        <ul>
+          <li><b>GET</b> — отримання списків або одного елемента</li>
+          <li><b>POST</b> — створення нового запису</li>
+          <li><b>PATCH</b> — оновлення даних</li>
+          <li><b>DELETE</b> — видалення</li>
+        </ul>
+      </li>
+      <li>Усі запити до захищених маршрутів вимагають <strong>JWT-токен</strong> через заголовок <b>Authorization: Bearer</b>.</li>
+      <li>Сервіси містять логіку перевірки <b>userId</b>, щоб користувач міг працювати лише зі своїми даними.</li>
+      <li>Деякі маршрути підтримують <strong>пагінацію</strong> через параметри <b>page</b> та <b>limit</b>.</li>
+    </ul>
+    <div class="image-block">
+      <img src="img/api-diagram.jpg" alt="Зображення">
+    </div>
+  </section>
+  <section>
+  <h2 style="color: #5b2c91;">Валідація вхідних даних</h2>
+  <p>У застосунку для валідації даних активно використовуються <strong>DTO-класи (Data Transfer Object)</strong> з декораторами з бібліотеки <b>class-validator</b>.</p>
+  <p>Валідація виконується автоматично завдяки інтеграції <b>ValidationPipe</b> на глобальному рівні.</p>
+    <div class="image-block">
+      <img src="img/dto.jpg" alt="Зображення">
+    </div>
+  </section>
+
+  <section>
+    <h2 style="color: #5b2c91;">Реалізація реєстрації та авторизації</h2>
+    <p>У застосунку реалізована система реєстрації та входу на основі <strong>JWT (JSON Web Token)</strong>.</p>
+    <p>Після успішного входу або реєстрації сервер видає користувачу <strong>JWT-токен</strong>, який містить його унікальний userId та email. Токен повертається клієнту та зберігається у <b>localStorage</b>.</p>
+    <div class="image-block">
+      <img src="img/hashing.png" alt="Зображення">
+    </div>
+    <div class="image-block">
+      <img src="img/auth.gif" alt="Зображення">
+    </div>
+  </section>
+
+  <section>
+    <h2 style="color: #5b2c91;">Додавання груп, рахунків та категорій</h2>
+    <p>Кожна сторінка побудована за принципом <strong>двох колонок</strong>: ліворуч розміщено список вже створених записів, а праворуч — форма створення нових.</p>
+    <p>При створенні нового рахунку користувач вводить назву, суму, валюту, опис та вибирає до якої групи він належить.</p>
+    <p>Додавання категорій є простішим — достатньо лише вказати її назву. Категорії використовуються при створенні транзакцій і допомагають групувати витрати або доходи.</p>
+    <div class="image-block">
+      <img src="img/groups-acct-ctgr.gif" alt="Зображення">
+    </div>
+  </section>
+
+  <section>
+      <h2 style="color: #5b2c91;">Робота з транзакціями</h2>
+      <p>користувач може створювати, переглядати та видаляти транзакції, які бувають двох типів: <strong>доходи (income)</strong> та <strong>витрати (expense)</strong>.</p>
+      <p>інтерфейс побудовано у вигляді таблиці, де кожна транзакція має такі колонки: тип, категорія, сума з валютою, нотатка та дата створення. у крайньому стовпчику — кнопка видалення.</p>
+      <p>додавання нової транзакції виконується через <strong>модальне вікно</strong>.</p>
+      <p>після створення транзакції баланс відповідного рахунку <strong>автоматично змінюється</strong>: якщо це витрата — сума віднімається, якщо дохід — додається. те ж саме відбувається у зворотному напрямку при видаленні транзакції.</p>
+      <p>для зручності реалізовано <strong>пагінацію</strong> — користувач може переглядати історію своїх транзакцій, перемикаючись між сторінками. дані оновлюються через api з параметрами <b>page</b> і <b>limit</b>.</p>
+    <div class="image-block">
+      <img src="img/transactions.gif" alt="зображення">
+    </div>
+  </section>
+  <section>
+    <h2 style="color: #5b2c91;">Система контролю версій</h2>
+    <p>У процесі розробки застосунку активно використовувалася система контролю версій <strong>Git</strong>. Основна розробка велася у гілці <b>main</b>.</p>
+    <p>Для хостингу репозиторію використовувався <strong>GitHub</strong>.</p>
+  <div class="image-block">
+    <img src="img/git.gif" alt="зображення">
+  </div>
+</section>
+
+</div>
+</body>
+</html>
